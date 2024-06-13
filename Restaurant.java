@@ -1,6 +1,5 @@
 import java.util.Scanner;
-
-import src.Customer;
+import src.*;
 
 public class Restaurant {
 
@@ -8,7 +7,7 @@ public class Restaurant {
 
         Scanner scanner = new Scanner(System.in);
 
-        
+
 
         scanner.close();
     }
