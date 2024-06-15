@@ -6,6 +6,7 @@ public class Restaurant {
 
         Scanner scanner = new Scanner(System.in);
 
+
         scanner.close();
     }
 

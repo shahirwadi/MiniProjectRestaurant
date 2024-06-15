@@ -1,4 +1,4 @@
-class Staff extends User {
+public class Staff extends User {
 
     private int staffID;
 
