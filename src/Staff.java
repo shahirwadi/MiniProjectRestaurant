@@ -1,6 +1,4 @@
-package src;
-
-public class Staff extends User {
+class Staff extends User {
 
     private int staffID;
 

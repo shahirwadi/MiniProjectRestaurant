@@ -1,6 +1,4 @@
-package src;
-
-public class User {
+class User {
 
     private String name;
     private String phone;

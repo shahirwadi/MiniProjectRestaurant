@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import src.*;
 
 public class Restaurant {
 

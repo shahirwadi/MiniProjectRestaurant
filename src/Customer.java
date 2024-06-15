@@ -1,6 +1,4 @@
-package src;
-
-public class Customer extends User{
+class Customer extends User{
     
     private int custID;
     private Review review;
