@@ -1,12 +1,12 @@
 public class Food {
-    private static int foodID;
+    private int foodID;
     private String foodName;
     private double foodPrice;
 
     public Food (String foodName, double foodPrice) {
+        this.foodID = foodID;
         this.foodName = foodName;
         this.foodPrice = foodPrice;
-        foodID++;
     }
 
     public int getfoodID(){

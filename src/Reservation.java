@@ -6,51 +6,36 @@ import java.util.Scanner;
 
 public class Reservation {
     private static int reservationID;
-    private static int numOfPeople;
+    private int numOfPeople;
     private Customer customer;
     private Table table;
     private LocalDate resDate;
     private LocalTime resTime;
 
-    public Reservation(){}
 
-    public void makeReservation(Customer customer, Table table){
+    public Reservation(int numOfPeople, Customer customer, Table table, LocalDate resDate, LocalTime resTime){
+        this.numOfPeople = numOfPeople;
         reservationID++;
-        numOfPeople++;
         this.customer = customer;
         this.table = table;
-
-        Scanner sc = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Enter a date (yyyy-MM-dd): ");
-            String inputDate = sc.nextLine();
-            // Define the date format
-            DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            try {
-                // Parse the input string to a LocalDate object
-                resDate = LocalDate.parse(inputDate, formatterDate);
-                System.out.println("You entered the date: " + resDate);
-                break;
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format. Please enter the date in yyyy-MM-dd format.");
-            }
-        }
-
-        while(true){
-            System.out.print("Enter a time (Hours-Minutes): ");
-            String inputTime = sc.nextLine();
-            // Define the time format
-            DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
-            try {
-                // Parse the input string to a LocalTime object
-                resTime = LocalTime.parse(inputTime, formatterTime);
-                System.out.println("You entered the time: " + resTime);
-                break;
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid time format. Please enter the time in HH:mm format.");
-            }
-        }   
-        sc.close();
     }
+    
+    public void confirm(Table table){
+        this.table = table;
+        table.reserveTable();
+    }
+
+    public void cancel() {
+        if (table != null) {
+            table.releaseTable();
+        }
+    }
+
+    public int getReservationId() { return reservationID; }
+    public Customer getCustomerName() { return customer; }
+    public LocalDate getDate() { return resDate; }
+    public LocalTime getTime() { return resTime; }
+    public int getNumberOfPeople() { return numOfPeople; }
+    public Table getTable() { return table; }
+    public void setTable(Table table) { this.table = table; }
 }
