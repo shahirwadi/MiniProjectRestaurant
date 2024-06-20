@@ -1,8 +1,5 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Scanner;
 
 public class Reservation {
     private static int reservationID;
@@ -12,12 +9,17 @@ public class Reservation {
     private LocalDate resDate;
     private LocalTime resTime;
 
+    public Reservation(){
+
+    }
 
     public Reservation(int numOfPeople, Customer customer, Table table, LocalDate resDate, LocalTime resTime){
         this.numOfPeople = numOfPeople;
         reservationID++;
         this.customer = customer;
         this.table = table;
+        this.resDate = resDate;
+        this.resTime = resTime;
     }
     
     public void confirm(Table table){
@@ -38,4 +40,13 @@ public class Reservation {
     public int getNumberOfPeople() { return numOfPeople; }
     public Table getTable() { return table; }
     public void setTable(Table table) { this.table = table; }
+
+    public void displayReservation(){
+        System.out.println("Reservation ID  : "+reservationID);
+        System.out.println("Customer Name   : "+customer.getName());
+        System.out.println("Date            : "+resDate);
+        System.out.println("Time            : "+resTime);
+        System.out.println("Number Of People: "+numOfPeople);
+        System.out.println("Table ID        : "+table.getTableId());
+    }
 }
