@@ -22,16 +22,16 @@ public class Waitlist {
         return waitlist;
     }
 
-    public Reservation promoteFromWaitlist(ArrayList<Table> tables) {
-        for (Reservation reservation : waitlist) {
-            for (Table table : tables) {
-                if (table.getAvailable() && table.getCapacity() >= reservation.getNumberOfPeople()) {
-                    reservation.confirm(table);
-                    waitlist.remove(reservation);
-                    return reservation;
-                }
-            }
-        }
-        return null;
-    }
+    // public Reservation promoteFromWaitlist(ArrayList<Table> tables) {
+    //     for (Reservation reservation : waitlist) {
+    //         for (Table table : tables) {
+    //             if (table.getAvailable() && table.getCapacity() >= reservation.getNumberOfPeople()) {
+    //                 reservation.confirm(table);
+    //                 waitlist.remove(reservation);
+    //                 return reservation;
+    //             }
+    //         }
+    //     }
+    //     return null;
+    // }
 }
