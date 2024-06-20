@@ -7,6 +7,25 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class Restaurant {
+
+    public static void readMenu(ArrayList<Food> food){   
+        try{
+            File tableFile = new File("src//Menu.csv");
+            Scanner readTable = new Scanner(tableFile);
+            int foodID;
+            String foodName;
+            double foodPrice;
+            while (readTable.hasNextLine()){
+                foodID = readTable.nextInt();
+                foodName = readTable.next();
+                foodPrice = readTable.nextInt();
+                food.add(new Food(foodID, foodName, foodPrice));
+            }
+            readTable.close();
+        } catch (FileNotFoundException e){
+            System.out.println("An error occurred.");
+        }
+    }
     
     public static void readTables(ArrayList<Table> tables ){   
         try{
@@ -67,16 +86,19 @@ public class Restaurant {
         ArrayList<Reservation> reservations = new ArrayList<>();
         ArrayList<Table> tables = new ArrayList<>();
         Waitlist waitlist = new Waitlist();
-        
-
-        System.out.println("WELCOME TO OUR RESTAURANT!");
-        System.out.println("[1] Create Reservation");
-        System.out.println("[2] Order Meals");
-        System.out.println("[0] Exit");
-        Scanner sc = new Scanner(System.in);
+        ArrayList<Food> foods = new ArrayList<>();
+        ArrayList<Order> orders = new ArrayList<>();
+        int countOrder = -1;
+        int countReservation = -1;
         
         int choice = 0;
         do {
+            System.out.println("WELCOME TO OUR RESTAURANT!");
+            System.out.println("[1] Create Reservation");
+            System.out.println("[2] Order Meals");
+            System.out.println("[0] Exit");
+            Scanner sc = new Scanner(System.in);
+
             System.out.print("Please choose provided option: ");
             choice = sc.nextInt();
             sc.nextLine();
@@ -96,9 +118,13 @@ public class Restaurant {
                     String email = sc.nextLine();
                     customers.add(new Customer(name, phone, email));
                     
-                    System.out.print("Enter the Number of People: ");
-                    int numOfPeople = sc.nextInt();
-                    sc.nextLine();
+                    int numOfPeople;
+
+                    do{
+                        System.out.print("Enter the Number of People: ");
+                        numOfPeople = sc.nextInt();
+                        sc.nextLine();
+                    } while(numOfPeople > 6);
 
                     LocalDateTime resStartTime = Restaurant.setStartTime(sc);
                     LocalDateTime resEndTime = Restaurant.setEndTime(sc);
@@ -113,16 +139,42 @@ public class Restaurant {
                         if(table.getAvailable(session) && table.getCapacity() >= numOfPeople){  
                             reservation.confirm(table, session); 
                             reservations.add(reservation);
-                            break;
-                            
+                            countReservation++;
+                            break;   
                         } else{
                             waitlist.addToWaitlist(reservation);
                         } 
                     }
-                    
-                    reservation.displayReservation();
-                    System.out.println(tables.get(0).getAvailable(session));
-                    System.out.println(tables.get(1).getAvailable(session));
+
+                    // order
+                    System.out.println("Create an order...");
+                    Restaurant.readMenu(foods);
+                    for(Food food : foods){
+                        food.printFood();
+                    }
+
+                    int foodChoice = 1;
+                    // Order order = new Order(orderID, customer);
+                    ArrayList<Food> foodList = new ArrayList<>();
+
+                    do{
+                        System.out.print("Enter your choice: ");
+                        foodChoice = sc.nextInt();
+
+                        for(Food food: foods){
+                            if(foodChoice == food.getfoodID()){
+                                foodList.add(food);
+                            }
+                        }
+                    } while(foodChoice != 0);
+                    //add to list
+                    Order order = new Order(new Customer(name, phone, email), foodList);
+                    orders.add(order);
+                    countOrder++;
+
+                    // display
+                    reservations.get(countReservation).displayReservation();
+                    orders.get(countOrder).displayOrders();
                         
                     break;
                 case 2:

@@ -3,7 +3,7 @@ public class Food {
     private String foodName;
     private double foodPrice;
 
-    public Food (String foodName, double foodPrice) {
+    public Food (int foodID, String foodName, double foodPrice) {
         this.foodID = foodID;
         this.foodName = foodName;
         this.foodPrice = foodPrice;
@@ -19,6 +19,10 @@ public class Food {
 
     public double getfoodPrice(){
         return foodPrice;
+    }
+
+    public void printFood(){
+        System.out.println(foodID + ". " + foodName + " RM" + foodPrice);
     }
 }
 
