@@ -16,9 +16,11 @@ public class Restaurant {
             String foodName;
             double foodPrice;
             while (readTable.hasNextLine()){
-                foodID = readTable.nextInt();
-                foodName = readTable.next();
-                foodPrice = readTable.nextInt();
+                String line = readTable.nextLine();
+                String[] parts = line.split(",");
+                foodID = Integer.parseInt(parts[0]);
+                foodName = parts[1];
+                foodPrice = Double.parseDouble(parts[2]);
                 food.add(new Food(foodID, foodName, foodPrice));
             }
             readTable.close();
@@ -88,8 +90,11 @@ public class Restaurant {
         Waitlist waitlist = new Waitlist();
         ArrayList<Food> foods = new ArrayList<>();
         ArrayList<Order> orders = new ArrayList<>();
+        ArrayList<Bill> bills = new ArrayList<>();
         int countOrder = -1;
         int countReservation = -1;
+        int customerCount =-1;
+        int countBill = -1;
         
         int choice = 0;
         do {
@@ -116,10 +121,19 @@ public class Restaurant {
                     String phone = sc.nextLine();
                     System.out.print("Email     : ");
                     String email = sc.nextLine();
-                    customers.add(new Customer(name, phone, email));
-                    
+                    System.out.println("Choose your customer type: ");
+                    System.out.println("[1] VIP");
+                    System.out.println("[2] Regular");
+                    int customerChoice = sc.nextInt();
+                    sc.nextLine();
+                    if(customerChoice==1){
+                        customers.add(new VIP(name, phone, email));
+                    } else{
+                        customers.add(new Regular(name, phone, email));
+                    }
+                    customerCount++;
+                        
                     int numOfPeople;
-
                     do{
                         System.out.print("Enter the Number of People: ");
                         numOfPeople = sc.nextInt();
@@ -133,7 +147,7 @@ public class Restaurant {
                     //Read all tables from files
                     Restaurant.readTables(tables);
 
-                    Reservation reservation = new Reservation(numOfPeople, new Customer(name, phone, email), null, session);
+                    Reservation reservation = new Reservation(numOfPeople, customers.get(customerCount), null, session);
 
                     for(Table table : tables){
                         if(table.getAvailable(session) && table.getCapacity() >= numOfPeople){  
@@ -168,7 +182,7 @@ public class Restaurant {
                         }
                     } while(foodChoice != 0);
                     //add to list
-                    Order order = new Order(new Customer(name, phone, email), foodList);
+                    Order order = new Order(customers.get(customerCount), foodList);
                     orders.add(order);
                     countOrder++;
 
@@ -178,7 +192,26 @@ public class Restaurant {
                         
                     break;
                 case 2:
-                    
+
+                    //payment
+                    System.out.println("Payment Information");
+                    System.out.print("Enter order ID: ");
+                    int orderID = sc.nextInt();
+                    for(Order ord : orders){
+                        if(ord.getOrderID() == orderID){
+                            bills.add(new Bill(ord));
+                            countBill++;
+                        }
+                    }
+
+                    Payment payment = new Payment();
+
+                    boolean success = true;
+                    do{
+                        success = payment.processPayment(bills.get(countBill), sc);
+                    } while(!success);
+                       
+                              
                     break;
             
                 default:

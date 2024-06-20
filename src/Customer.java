@@ -1,4 +1,4 @@
-public class Customer extends User{
+abstract class Customer extends User{
     
     private int custID;
     private Review review;
@@ -20,4 +20,5 @@ public class Customer extends User{
         return custID;
     }
 
+    abstract double getDiscount();
 }
