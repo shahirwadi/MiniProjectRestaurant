@@ -2,9 +2,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Review {
-    private static int reviewID;
+    private static int reviewID = 0;
     private int rating;
     private String comment;
+    private Customer customer;
 
     public Review(){}
     public Review(int rating, String comment){
@@ -12,8 +13,9 @@ public class Review {
         this.comment = comment;
     }
 
-    public void reviewForm(){
-        Scanner sc = new Scanner(System.in);
+    public void reviewForm(Scanner sc, Customer customer){
+        this.customer = customer;
+        // Scanner sc = new Scanner(System.in);
         reviewID++;
         while (true) {
             try {
@@ -43,7 +45,11 @@ public class Review {
                 System.out.println(e.getMessage());
             }
         }
-        
-        sc.close();
+    }
+
+    public void displayReview(){
+        System.out.println("Customer Name   : "+customer.getName());
+        System.out.println("Rating          : "+rating);
+        System.out.println("Comment         : "+comment);
     }
 }

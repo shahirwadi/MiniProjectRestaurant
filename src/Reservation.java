@@ -7,10 +7,6 @@ public class Reservation {
     private Table table;
     private TimeSession session;
 
-    public Reservation(){
-
-    }
-
     public Reservation(int numOfPeople, Customer customer, Table table, TimeSession session){
         this.numOfPeople = numOfPeople;
         reservationID++;
@@ -29,14 +25,6 @@ public class Reservation {
             table.releaseTable(session);
         }
     }
-
-    public int getReservationId() { return reservationID; }
-    public Customer getCustomerName() { return customer; }
-    public LocalDateTime getStartTime() { return session.getStartTime(); }
-    public LocalDateTime getEndTime() { return session.getEndTime(); }
-    public int getNumberOfPeople() { return numOfPeople; }
-    public Table getTable() { return table; }
-    public void setTable(Table table) { this.table = table; }
 
     public void displayReservation(){
         System.out.println("Reservation ID  : "+reservationID);

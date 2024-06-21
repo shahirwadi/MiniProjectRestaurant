@@ -91,6 +91,7 @@ public class Restaurant {
         ArrayList<Food> foods = new ArrayList<>();
         ArrayList<Order> orders = new ArrayList<>();
         ArrayList<Bill> bills = new ArrayList<>();
+        ArrayList<Review> reviews = new ArrayList<>();
         int countOrder = -1;
         int countReservation = -1;
         int customerCount =-1;
@@ -100,7 +101,8 @@ public class Restaurant {
         do {
             System.out.println("WELCOME TO OUR RESTAURANT!");
             System.out.println("[1] Create Reservation");
-            System.out.println("[2] Order Meals");
+            System.out.println("[2] Payment");
+            System.out.println("[3] Review");
             System.out.println("[0] Exit");
             Scanner sc = new Scanner(System.in);
 
@@ -166,6 +168,7 @@ public class Restaurant {
                     for(Food food : foods){
                         food.printFood();
                     }
+                    System.out.println("[0] Finish Order");
 
                     int foodChoice = 1;
                     // Order order = new Order(orderID, customer);
@@ -209,9 +212,20 @@ public class Restaurant {
                     boolean success = true;
                     do{
                         success = payment.processPayment(bills.get(countBill), sc);
-                    } while(!success);
-                       
-                              
+                    } while(!success);      
+                    break;
+
+                case 3:
+                    Review review = new Review();
+                    System.out.print("Please enter your name: ");
+                    String custName = sc.nextLine();
+                    for(Customer customer : customers){
+                        if(customer.getName().equals(custName)){
+                            review.reviewForm(sc, customer);
+                            reviews.add(review);
+                        }
+                    }
+                    reviews.get(0).displayReview();
                     break;
             
                 default:
