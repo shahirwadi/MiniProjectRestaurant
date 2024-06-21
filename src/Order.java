@@ -7,10 +7,6 @@ public class Order {
     private ArrayList<Food> foodList;
     private double total_price;
 
-    public double getTotalPrice(){
-        return total_price;
-    }
-
     public Order(Customer customer, ArrayList<Food> foodList){
         count++;
         this.orderID = count;
@@ -18,6 +14,10 @@ public class Order {
         this.foodList = foodList;
         this.total_price = 0;
         calculatePrice();
+    }
+    
+    public double getTotalPrice(){
+        return total_price;
     }
 
     public void calculatePrice(){
